@@ -8,7 +8,14 @@ const io = new Server(server);
 
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  socket.on('message', (msg) => {
+    console.log('Message received: ' + msg);
+    io.emit('message', msg);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected');
+  }); 
 });
 
 app.get('/', (req, res) => {
